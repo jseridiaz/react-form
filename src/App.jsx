@@ -1,9 +1,10 @@
 import { useForm } from 'react-hook-form'
 import './App.css'
+import { motion } from 'framer-motion'
 
 function App() {
-  const { handleSubmit, register, formState, watch } = useForm({
-    defaultvalues: { username: '', email: '', password: '' }
+  const { handleSubmit, register, formState } = useForm({
+    defaultvalues: { username: '', email: '', password: '', terms: false }
   })
 
   const onSubmit = (e) => {
@@ -19,10 +20,17 @@ function App() {
             src='https://res.cloudinary.com/ddybbosdk/image/upload/v1721636861/proyect-practice-react/all-picture-img_wjen6u.png'
             loading='lazy'
             alt='main-page-picture'
+            draggable={false}
           />
         </div>
         <div id='form-div-container'>
-          <form id='form-register' onSubmit={handleSubmit(onSubmit)}>
+          <motion.form
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            id='form-register'
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <div>
               <img
                 id='logo-all-picture-form'
@@ -38,6 +46,11 @@ function App() {
               <label htmlFor='name'>Username</label>
               <input
                 id='name'
+                className={
+                  formState.isSubmitted && !formState.errors?.username
+                    ? 'succes'
+                    : null
+                }
                 type='text'
                 {...register('username', {
                   required: { value: true, message: '*' }
@@ -53,12 +66,16 @@ function App() {
               <label htmlFor='email'>Email</label>
               <input
                 id='email'
+                className={
+                  formState.isSubmitted && !formState.errors?.email
+                    ? 'succes'
+                    : null
+                }
                 {...register('email', {
                   required: { value: true, message: '*' },
                   pattern: {
                     value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                    message:
-                      "The email must contain a @ followed by a valid extension '.com/.net/...' "
+                    message: 'Introduce a valid email'
                   }
                 })}
               />
@@ -69,7 +86,10 @@ function App() {
                 >{`${formState.errors.email?.message}`}</p>
               ) : null}
               {formState.errors.email?.type == 'pattern' ? (
-                <p id='error-email className="error-type"'>{`${formState.errors.email?.message}`}</p>
+                <p
+                  id='error-email'
+                  className='error-type'
+                >{`${formState.errors.email?.message}`}</p>
               ) : null}
             </fieldset>
             <fieldset>
@@ -77,16 +97,21 @@ function App() {
               <input
                 id='password'
                 type='password'
+                className={
+                  formState.isSubmitted && !formState.errors?.password
+                    ? 'succes'
+                    : null
+                }
                 {...register('password', {
                   required: { value: true, message: '*' },
                   pattern: {
                     value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).*$/,
                     message:
-                      'The password must contain an uppercase, lowercase word, a special character [@$!%*?&] and a number'
+                      'Password must contain an uppercase, lowercase, special character and a number'
                   },
                   minLength: {
                     value: 7,
-                    message: 'the password must contain at least 7 words'
+                    message: 'Password must contain at least 7 words'
                   }
                 })}
               />
@@ -106,21 +131,32 @@ function App() {
                 </p>
               )}
             </fieldset>
-            <fieldset>
-              {formState.isValid && (
-                <input
-                  {...register('terms', {
-                    required: { value: true, message: '*' }
-                  })}
-                  className='input-terms-privacity'
-                  type='checkbox'
-                />
-              )}
-            </fieldset>
+            {console.log(formState.errors)}
+            <>
+              <fieldset className='flex-container'>
+                <div className='flex-container'>
+                  <label htmlFor='terms-box'>Accept Terms and Conditions</label>
+                  <input
+                    type='checkbox'
+                    id='terms-box'
+                    {...register('terms', {
+                      required: {
+                        value: true,
+                        message: 'Terms and conditions need to be accepted'
+                      }
+                    })}
+                  />
+                </div>
+                {formState.errors.terms ? (
+                  <p>{formState.errors.terms.message}</p>
+                ) : null}
+              </fieldset>
+            </>
+
             <button type='submit' disabled={!formState.isDirty ? true : false}>
               Sign up
             </button>
-          </form>
+          </motion.form>
         </div>
       </article>
     </>

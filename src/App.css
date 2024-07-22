@@ -1,5 +1,6 @@
 #root {
   max-width: 100svw;
+  width: 100svw;
   padding: 0rem;
   text-align: center;
 }
@@ -8,7 +9,7 @@
 }
 [id='formular-page'] {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 0.9fr 1.1fr;
 }
 .error-type {
   color: red;
@@ -19,6 +20,7 @@
 }
 [id='img-general-form'] > img {
   width: 100%;
+  user-select: none;
   height: 100%;
   object-fit: cover;
   object-position: 0%;
@@ -33,7 +35,8 @@
   color: gray;
 }
 [id='form-register'] {
-  width: 70%;
+  position: relative;
+  width: 80%;
   border-radius: 2rem;
   height: 92%;
   margin-inline: auto;
@@ -44,7 +47,7 @@
   transition: all 0.5s ease;
 }
 [id='form-register'] > div > h2 {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   font-size: 2rem;
 }
 [id='form-register'] > div > img:hover {
@@ -58,39 +61,84 @@
   flex-direction: column;
   padding: 5px 0px;
   align-items: center;
+  overflow: hidden;
 }
 
 [id='form-register'] > fieldset > p.error-required {
   position: absolute;
-  left: 15%;
-  top: 50%;
+  left: 15.7%;
+  font-size: 1.2rem;
+  top: 58%;
+  padding: 0px;
   text-decoration: none;
 }
 [id='form-register'] > fieldset > input {
   font-size: 1.1rem;
+  padding-inline: 1rem;
 }
-[id='form-register'] > fieldset > input:focus {
-  outline: 3px solid #2fa7e3;
+[id='form-register'] > fieldset > input:focus:not(input[type='checkbox']) {
+  outline: 3px solid aliceblue;
 }
+[id='form-register'] > div > fieldset.flex-container {
+  flex-direction: row;
+  gap: 70px;
+}
+[id='form-register'] > fieldset.flex-container > div > p {
+  width: 100%;
+}
+[id='form-register'] > fieldset.flex-container > div {
+  gap: 5px;
+}
+[id='form-register'] > fieldset.flex-container > div > input,
+[id='form-register'] > fieldset.flex-container > div > label {
+  width: fit-content;
+  cursor: pointer;
+  text-decoration: underline;
+}
+[id='form-register'] > fieldset.flex-container > div > input {
+  width: 18px;
+}
+
 [id='form-register'] > fieldset > p {
   color: red;
   text-decoration: underline;
+  padding-inline: 1rem;
+  line-height: 1;
+}
+.no-visibility {
+  visibility: hidden;
 }
 [id='form-register'] > fieldset:nth-of-type(1) {
   margin-top: 1.5rem;
+  transform: translate(100%);
+  opacity: 0;
+  animation: move 0.2s linear forwards 0.6s;
+}
+[id='form-register'] > fieldset:nth-of-type(2) {
+  transform: translate(100%);
+  opacity: 0;
+  animation: move 0.35s linear forwards 0.7s;
+}
+[id='form-register'] > fieldset:nth-of-type(3) {
+  transform: translate(100%);
+  opacity: 0;
+  animation: move 0.5s linear forwards 0.7s;
 }
 [id='form-register'] > fieldset > label {
-  font-size: 1.4rem;
+  align-self: start;
+  font-size: 1rem;
+  margin-left: 15%;
+  z-index: 2;
 }
 [id='form-register'] > fieldset > input {
-  padding: 7px;
+  padding: 10px 10px 10px 15px;
   width: 70%;
   border-radius: 5px;
   border: none;
 }
 [id='logo-all-picture-form'] {
-  width: 80px;
-  height: 80px;
+  width: 55px;
+  height: 55px;
 }
 [id='form-register'] > button {
   height: 70px;
@@ -100,4 +148,50 @@
 }
 [id='form-register'] > button:hover {
   border-color: black;
+}
+
+@keyframes move {
+  100% {
+    opacity: 1;
+    transform: translate(0%);
+  }
+}
+@media (width<1201px) {
+  [id='form-register'] > fieldset > p,
+  [id='form-register'] > fieldset > p.error-type {
+    font-size: 0.8rem;
+  }
+}
+@media (width<991px) {
+  [id='formular-page'] {
+    grid-template-columns: 1fr;
+  }
+  [id='form-div-container'] {
+    position: absolute;
+    background-color: transparent;
+  }
+  [id='logo-all-picture-form'] {
+    display: none;
+  }
+  [id='form-register'] {
+    width: 60%;
+  }
+}
+@media (width<650px) {
+  [id='form-register'] > fieldset > input {
+    padding: 7px;
+    font-size: 1rem;
+  }
+  [id='form-register'] {
+    width: 85%;
+  }
+}
+@media (width<530px) {
+  [id='form-register'] {
+    width: 90%;
+  }
+  [id='form-register'] > div > h2 {
+    margin-top: 0px;
+    font-size: 1.7rem;
+  }
 }
