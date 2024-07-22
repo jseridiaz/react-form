@@ -137,14 +137,17 @@
   border: none;
 }
 [id='logo-all-picture-form'] {
-  width: 55px;
-  height: 55px;
+  width: 60px;
+  height: 60px;
 }
 [id='form-register'] > button {
   height: 70px;
   margin-top: 1rem;
   width: 100px;
   font-weight: 800;
+}
+[id='form-register'] > button:disabled:hover {
+  border-color: transparent;
 }
 [id='form-register'] > button:hover {
   border-color: black;

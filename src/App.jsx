@@ -3,7 +3,11 @@ import './App.css'
 import { motion } from 'framer-motion'
 
 function App() {
-  const { handleSubmit, register, formState } = useForm({
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitted, isDirty }
+  } = useForm({
     defaultvalues: { username: '', email: '', password: '', terms: false }
   })
 
@@ -13,7 +17,6 @@ function App() {
 
   return (
     <>
-      {console.log(formState)}
       <article id='formular-page'>
         <div id='img-general-form'>
           <img
@@ -36,6 +39,7 @@ function App() {
                 id='logo-all-picture-form'
                 src='https://res.cloudinary.com/ddybbosdk/image/upload/v1712390544/Logo_Fotogallery_wm24qa.png'
                 alt='logo-all-pictures'
+                draggable={false}
               />
               <h2>Create an Account</h2>
               <p className='parraf-info-form'>
@@ -46,19 +50,15 @@ function App() {
               <label htmlFor='name'>Username</label>
               <input
                 id='name'
-                className={
-                  formState.isSubmitted && !formState.errors?.username
-                    ? 'succes'
-                    : null
-                }
+                className={isSubmitted && !errors?.username && 'succes'}
                 type='text'
                 {...register('username', {
                   required: { value: true, message: '*' }
                 })}
               />
-              {formState.errors.username?.type == 'required' ? (
+              {errors.username?.type == 'required' ? (
                 <p id='error-username' className='error-required'>
-                  {formState.errors.username?.message}
+                  {errors.username?.message}
                 </p>
               ) : null}
             </fieldset>
@@ -66,11 +66,7 @@ function App() {
               <label htmlFor='email'>Email</label>
               <input
                 id='email'
-                className={
-                  formState.isSubmitted && !formState.errors?.email
-                    ? 'succes'
-                    : null
-                }
+                className={isSubmitted && !errors?.email && 'succes'}
                 {...register('email', {
                   required: { value: true, message: '*' },
                   pattern: {
@@ -79,17 +75,17 @@ function App() {
                   }
                 })}
               />
-              {formState.errors.email?.type == 'required' ? (
+              {errors.email?.type == 'required' ? (
                 <p
                   id='error-email'
                   className='error-required'
-                >{`${formState.errors.email?.message}`}</p>
+                >{`${errors.email?.message}`}</p>
               ) : null}
-              {formState.errors.email?.type == 'pattern' ? (
+              {errors.email?.type == 'pattern' ? (
                 <p
                   id='error-email'
                   className='error-type'
-                >{`${formState.errors.email?.message}`}</p>
+                >{`${errors.email?.message}`}</p>
               ) : null}
             </fieldset>
             <fieldset>
@@ -97,11 +93,7 @@ function App() {
               <input
                 id='password'
                 type='password'
-                className={
-                  formState.isSubmitted && !formState.errors?.password
-                    ? 'succes'
-                    : null
-                }
+                className={isSubmitted && !errors?.password && 'succes'}
                 {...register('password', {
                   required: { value: true, message: '*' },
                   pattern: {
@@ -115,23 +107,23 @@ function App() {
                   }
                 })}
               />
-              {formState.errors.password?.type == 'required' ? (
+              {errors.password?.type == 'required' ? (
                 <p id='error-password-required' className='error-required'>
-                  {formState.errors.password?.message}
+                  {errors.password?.message}
                 </p>
               ) : null}
-              {formState.errors.password?.type == 'minLength' ? (
+              {errors.password?.type == 'minLength' ? (
                 <p id='error-password-required' className='error-type'>
-                  {formState.errors.password?.message}
+                  {errors.password?.message}
                 </p>
               ) : null}
-              {formState.errors.password?.type == 'pattern' && (
+              {errors.password?.type == 'pattern' && (
                 <p id='error-password-pattern' className='error-type'>
-                  {formState.errors.password?.message}
+                  {errors.password?.message}
                 </p>
               )}
             </fieldset>
-            {console.log(formState.errors)}
+
             <>
               <fieldset className='flex-container'>
                 <div className='flex-container'>
@@ -147,13 +139,11 @@ function App() {
                     })}
                   />
                 </div>
-                {formState.errors.terms ? (
-                  <p>{formState.errors.terms.message}</p>
-                ) : null}
+                {errors.terms ? <p>{errors.terms.message}</p> : null}
               </fieldset>
             </>
 
-            <button type='submit' disabled={!formState.isDirty ? true : false}>
+            <button type='submit' disabled={!isDirty ? true : false}>
               Sign up
             </button>
           </motion.form>
