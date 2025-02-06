@@ -30,6 +30,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   max-height: 100svw;
+  overflow: hidden;
 }
 .succes {
   background-color: rgb(134, 241, 134);
