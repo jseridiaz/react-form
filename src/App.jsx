@@ -1,8 +1,10 @@
 import { useForm } from 'react-hook-form'
 import './App.css'
 import { motion } from 'framer-motion'
+import { useState } from 'react'
 
 function App() {
+  const [submitted, setSubmitted] = useState(null)
   const {
     handleSubmit,
     register,
@@ -12,7 +14,7 @@ function App() {
   })
 
   const onSubmit = (e) => {
-    console.log(e)
+    setSubmitted('The register form has been succesfully submitted')
   }
 
   return (
@@ -146,6 +148,7 @@ function App() {
             <button type='submit' disabled={!isDirty ? true : false}>
               Sign up
             </button>
+            {submitted ? <p className='info-submitted'>{submitted}</p> : null}
           </motion.form>
         </div>
       </article>

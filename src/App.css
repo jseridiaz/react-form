@@ -198,3 +198,7 @@
     font-size: 1.7rem;
   }
 }
+.info-submitted {
+  margin-top: 2rem;
+  font-weight: 600;
+}
