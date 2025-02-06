@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { useState } from 'react'
 
 function App() {
-  const [submitted, setSubmitted] = useState(null)
+  const [submitted, setSubmitted] = useState('')
   const {
     handleSubmit,
     register,
@@ -13,7 +13,7 @@ function App() {
     defaultvalues: { username: '', email: '', password: '', terms: false }
   })
 
-  const onSubmit = (e) => {
+  const onSubmit = () => {
     setSubmitted('The register form has been succesfully submitted')
   }
 
@@ -25,7 +25,7 @@ function App() {
             src='https://res.cloudinary.com/ddybbosdk/image/upload/v1721636861/proyect-practice-react/all-picture-img_wjen6u.png'
             loading='lazy'
             alt='main-page-picture'
-            draggable={false}
+            draggable={'false'}
           />
         </div>
         <div id='form-div-container'>
@@ -52,7 +52,9 @@ function App() {
               <label htmlFor='name'>Username</label>
               <input
                 id='name'
-                className={isSubmitted && !errors?.username && 'succes'}
+                className={
+                  isSubmitted && !errors?.username ? 'succes' : undefined
+                }
                 type='text'
                 {...register('username', {
                   required: { value: true, message: '*' }
@@ -68,7 +70,7 @@ function App() {
               <label htmlFor='email'>Email</label>
               <input
                 id='email'
-                className={isSubmitted && !errors?.email && 'succes'}
+                className={isSubmitted && !errors?.email ? 'succes' : undefined}
                 {...register('email', {
                   required: { value: true, message: '*' },
                   pattern: {
@@ -95,7 +97,9 @@ function App() {
               <input
                 id='password'
                 type='password'
-                className={isSubmitted && !errors?.password && 'succes'}
+                className={
+                  isSubmitted && !errors?.password ? 'succes' : undefined
+                }
                 {...register('password', {
                   required: { value: true, message: '*' },
                   pattern: {
