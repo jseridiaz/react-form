@@ -166,6 +166,9 @@
   }
 }
 @media (width<991px) {
+  [id='form-register'] {
+    margin-top: 2rem;
+  }
   [id='formular-page'] {
     grid-template-columns: 1fr;
   }
